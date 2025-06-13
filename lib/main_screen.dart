@@ -42,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
               debugPrint(myfruits[1]["family"]);
               debugPrint(myfruits[1]["nutritions"]["calories"].toString());
             },
-            child: Text("click"),
+            child: Text("click for fruit details"),
           )
         ],
       )),
