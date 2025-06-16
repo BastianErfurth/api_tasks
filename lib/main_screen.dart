@@ -11,41 +11,70 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List<dynamic> myfruits = [];
+  String drinkName = "";
+  String alcoholic = "";
+  String image = "";
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 94, 196, 183),
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 94, 196, 183),
         title: Text('API Tasks'),
       ),
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("Name: ${myfruits.isNotEmpty ? myfruits[1]["name"] : ""}"),
-          Text("Family: ${myfruits.isNotEmpty ? myfruits[1]["family"] : ""}"),
-          Text(
-              "Kalorien: ${myfruits.isNotEmpty ? myfruits[1]["nutritions"]["calories"].toString() : ""}"),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () async {
-              final response = await http.get(
-                Uri.parse("https://www.fruityvice.com/api/fruit/all"),
-              );
-              String myJson = response.body;
+          child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Cockstailname:"),
+            isLoading ? CircularProgressIndicator() : SizedBox.shrink(),
+            Text(drinkName,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                )),
+            SizedBox(height: 20),
+            Text("mit oder ohne Alkohol?:"),
+            isLoading ? CircularProgressIndicator() : SizedBox.shrink(),
+            Text(alcoholic,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                )),
+            SizedBox(height: 20),
+            Image.network(image, height: 300, width: 300, fit: BoxFit.cover),
+            isLoading ? CircularProgressIndicator() : SizedBox.shrink(),
+            SizedBox(height: 50),
+            ElevatedButton(
+              onPressed: () async {
+                setState(() {
+                  isLoading = true;
+                });
+                final response = await http.get(
+                  Uri.parse(
+                      "https://www.thecocktaildb.com/api/json/v1/1/random.php"),
+                );
+                String myJson = response.body;
 
-              final List myFruits = jsonDecode(myJson);
-              setState(() {
-                myfruits = myFruits;
-              });
-              debugPrint(myfruits[1]["name"]);
-              debugPrint(myfruits[1]["family"]);
-              debugPrint(myfruits[1]["nutritions"]["calories"].toString());
-            },
-            child: Text("click for fruit details"),
-          )
-        ],
+                final Map<String, dynamic> myDrinks = jsonDecode(myJson);
+                setState(() {
+                  drinkName =
+                      myDrinks["drinks"]?[0]?["strDrink"] ?? "No drink found";
+                  alcoholic = myDrinks["drinks"]?[0]?["strAlcoholic"] ??
+                      "No alcoholic information found";
+                  image = myDrinks["drinks"]?[0]?["strDrinkThumb"] ??
+                      "No image found";
+                  isLoading = false;
+                });
+              },
+              child: Text("click for new Ccocktail"),
+            )
+          ],
+        ),
       )),
     );
   }
