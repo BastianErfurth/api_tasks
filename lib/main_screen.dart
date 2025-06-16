@@ -19,9 +19,9 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 94, 196, 183),
+      backgroundColor: Color.fromARGB(255, 138, 164, 160),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 94, 196, 183),
+        backgroundColor: Color.fromARGB(255, 138, 164, 160),
         title: Text('API Tasks'),
       ),
       body: Center(
@@ -30,7 +30,7 @@ class _MainScreenState extends State<MainScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Cockstailname:"),
+            Text("Cocktailname:"),
             isLoading ? CircularProgressIndicator() : SizedBox.shrink(),
             Text(drinkName,
                 style: TextStyle(
@@ -71,7 +71,7 @@ class _MainScreenState extends State<MainScreen> {
                   isLoading = false;
                 });
               },
-              child: Text("click for new Ccocktail"),
+              child: Text("click for new Cocktail"),
             )
           ],
         ),
