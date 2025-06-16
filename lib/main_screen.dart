@@ -23,10 +23,11 @@ class _MainScreenState extends State<MainScreen> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Name: ${myfruits.isNotEmpty ? myfruits[1]["name"] : ""}'),
-          Text('Family: ${myfruits.isNotEmpty ? myfruits[1]["family"] : ""}'),
+          Text("Name: ${myfruits.isNotEmpty ? myfruits[1]["name"] : ""}"),
+          Text("Family: ${myfruits.isNotEmpty ? myfruits[1]["family"] : ""}"),
           Text(
-              'Kalorien: ${myfruits.isNotEmpty ? myfruits[1]["nutritions"]["calories"].toString() : ""}'),
+              "Kalorien: ${myfruits.isNotEmpty ? myfruits[1]["nutritions"]["calories"].toString() : ""}"),
+          SizedBox(height: 20),
           ElevatedButton(
             onPressed: () async {
               final response = await http.get(
