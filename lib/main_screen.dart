@@ -82,15 +82,14 @@ class _MainScreenState extends State<MainScreen> {
                           final Map<String, dynamic> myDrinks =
                               jsonDecode(myJson);
                           setState(() {
-                            drinkName = myDrinks["drinks"]?[0]?["strDrink"] ??
+                            drinkName = myDrinks["drinks"][0]["strDrink"] ??
                                 "No drink found";
-                            alcoholic = myDrinks["drinks"]?[0]
-                                    ?["strAlcoholic"] ??
+                            alcoholic = myDrinks["drinks"][0]["strAlcoholic"] ??
                                 "No alcoholic information found";
                             image =
-                                myDrinks["drinks"]?[0]?["strDrinkThumb"] ?? "";
-                            instructions = myDrinks["drinks"]?[0]
-                                    ?["strInstructions"] ??
+                                myDrinks["drinks"][0]["strDrinkThumb"] ?? "";
+                            instructions = myDrinks["drinks"][0]
+                                    ["strInstructions"] ??
                                 "No instructions found";
                             isLoading = false;
                           });
