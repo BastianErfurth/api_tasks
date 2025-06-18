@@ -53,7 +53,10 @@ class _MainScreenState extends State<MainScreen> {
                     Image.network(image,
                         height: 300, width: 300, fit: BoxFit.cover),
                     SizedBox(height: 50),
-                    ElevatedButton(
+                    FilledButton(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 60, 91, 87),
+                      ),
                       onPressed: () async {
                         setState(() {
                           isLoading = true;
@@ -76,7 +79,9 @@ class _MainScreenState extends State<MainScreen> {
                           isLoading = false;
                         });
                       },
-                      child: Text("click for new Cocktail"),
+                      child: Text(
+                        "click for new Cocktail",
+                      ),
                     ),
                   ],
                 ),
