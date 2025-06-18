@@ -14,6 +14,7 @@ class _MainScreenState extends State<MainScreen> {
   String drinkName = "";
   String alcoholic = "";
   String image = "";
+  String instructions = "";
   bool isLoading = false;
 
   @override
@@ -29,61 +30,77 @@ class _MainScreenState extends State<MainScreen> {
           padding: const EdgeInsets.all(16.0),
           child: isLoading
               ? CircularProgressIndicator()
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Cocktailname:"),
-                    Text(
-                      drinkName,
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+              : SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Cocktailname:"),
+                      Text(
+                        drinkName,
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    Text("mit oder ohne Alkohol?:"),
-                    Text(
-                      alcoholic,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
+                      SizedBox(height: 20),
+                      Text("mit oder ohne Alkohol?:"),
+                      Text(
+                        alcoholic,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    Image.network(image,
-                        height: 300, width: 300, fit: BoxFit.cover),
-                    SizedBox(height: 50),
-                    FilledButton(
-                      style: FilledButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 60, 91, 87),
+                      SizedBox(height: 20),
+                      Image.network(image,
+                          height: 300, width: 300, fit: BoxFit.cover),
+                      SizedBox(height: 20),
+                      Center(
+                        child: Text(
+                          instructions,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
-                      onPressed: () async {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        final response = await http.get(
-                          Uri.parse(
-                              "https://www.thecocktaildb.com/api/json/v1/1/random.php"),
-                        );
-                        String myJson = response.body;
+                      SizedBox(height: 20),
+                      FilledButton(
+                        style: FilledButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 60, 91, 87),
+                        ),
+                        onPressed: () async {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          final response = await http.get(
+                            Uri.parse(
+                                "https://www.thecocktaildb.com/api/json/v1/1/random.php"),
+                          );
+                          String myJson = response.body;
 
-                        final Map<String, dynamic> myDrinks =
-                            jsonDecode(myJson);
-                        setState(() {
-                          drinkName = myDrinks["drinks"]?[0]?["strDrink"] ??
-                              "No drink found";
-                          alcoholic = myDrinks["drinks"]?[0]?["strAlcoholic"] ??
-                              "No alcoholic information found";
-                          image =
-                              myDrinks["drinks"]?[0]?["strDrinkThumb"] ?? "";
-                          isLoading = false;
-                        });
-                      },
-                      child: Text(
-                        "click for new Cocktail",
+                          final Map<String, dynamic> myDrinks =
+                              jsonDecode(myJson);
+                          setState(() {
+                            drinkName = myDrinks["drinks"]?[0]?["strDrink"] ??
+                                "No drink found";
+                            alcoholic = myDrinks["drinks"]?[0]
+                                    ?["strAlcoholic"] ??
+                                "No alcoholic information found";
+                            image =
+                                myDrinks["drinks"]?[0]?["strDrinkThumb"] ?? "";
+                            instructions = myDrinks["drinks"]?[0]
+                                    ?["strInstructions"] ??
+                                "No instructions found";
+                            isLoading = false;
+                          });
+                        },
+                        child: Text(
+                          "click for new Cocktail",
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
         ),
       ),
