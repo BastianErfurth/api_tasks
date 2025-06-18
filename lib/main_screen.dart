@@ -23,7 +23,7 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: Color.fromARGB(255, 138, 164, 160),
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 138, 164, 160),
-        title: Text('API Tasks'),
+        title: Text('API App'),
       ),
       body: Center(
         child: Padding(
